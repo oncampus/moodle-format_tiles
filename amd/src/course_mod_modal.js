@@ -27,9 +27,9 @@
  * @since       Moodle 3.3
  */
 
-define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/notification", "core/ajax",
+define(["jquery", "core/modal", "core/config", "core/templates", "core/notification", "core/ajax",
         'core/fragment', "core/modal_events"],
-    function ($, modalFactory, config, Templates, Notification, ajax, Fragment, ModalEvents) {
+    function ($, modal, config, Templates, Notification, ajax, Fragment, ModalEvents) {
         "use strict";
 
         var loadingIconHtml;
@@ -101,14 +101,13 @@ define(["jquery", "core/modal_factory", "core/config", "core/templates", "core/n
                 cmId, moduleContextId, sectionNum, title, objectType,
                 completionEnabled, existingCompletionState, isManualCompletion, descriptionHTML
             ) {
-            modalFactory.create({
-                type: modalFactory.types.DEFAULT,
+            modal.create({
                 title: title,
-                body: loadingIconHtml
-            }).done(function (modal) {
-                modal.setLarge();
-                modal.show();
-                modal.setScrollable(true);
+                body: loadingIconHtml,
+                large: true,
+                show:true,
+                scrollable: true,
+            }).then(function (modal) {
                 const modalRoot = $(modal.root);
                 const modalId = "embed_mod_modal_" + cmId;
                 // If modal exists from previous launch, remove.

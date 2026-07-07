@@ -295,15 +295,14 @@ define(["jquery", "core/templates", "core/ajax", "core/str", "core/notification"
                         tilenumbers: Array.from({length: maxNumberIcons + 1}, (e, i)=> i).filter((e) => e > 0),
                         wwwroot: config.wwwroot
                     }).done(function (iconsHTML) {
-                        require(["core/modal_factory"], function (modalFact) {
-                            modalFact.create({
-                                type: modalFact.types.DEFAULT,
+                        require(["core/modal"], function (modal) {
+                            modal.create({
                                 title: stringStore.pickAnIcon,
-                                body: iconsHTML
-                            }).done(function (modal) {
+                                body: iconsHTML,
+                                large: true,
+                                show: true,
+                            }).then(function (modal) {
                                 modalStored = modal;
-                                modal.setLarge();
-                                modal.show();
                                 var modalRoot = $(modal.root);
                                 modalRoot.attr("id", "icon_picker_modal");
                                 modalRoot.data("true-sectionid", sectionId);

@@ -65,17 +65,13 @@ class dynamic_styles {
      * @throws \moodle_exception
      */
     public static function get_tiles_dynamic_css(): string {
-        global $CFG, $PAGE;
+        global $PAGE;
         $courseid = $PAGE->course->id ?? 0;
         $data = self::data_for_template($courseid);
-        $m = new \Mustache_Engine();
-        return $m->render(
-            file_get_contents("$CFG->dirroot/course/format/tiles/templates/dynamic_styles.mustache"),
-            $data
-        );
+        return $PAGE->get_renderer('core')->render_from_template('format_tiles/dynamic_styles', $data);
     }
 
-    /**
+        /**
      * Export the data for the mustache template.
      * @see \format_tiles\local\util::width_template_data()
      * @param int $courseid
